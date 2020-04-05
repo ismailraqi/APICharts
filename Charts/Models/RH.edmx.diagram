@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="5955e320de2d4befbf7c1ef6ab151d6f" Name="Diagram1" ZoomLevel="86">
+        <EntityTypeShape EntityType="Processus_RHModel.Dim_Absences" Width="1.5" PointX="4.625" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Processus_RHModel.Dim_DepEmp" Width="1.5" PointX="3.5" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Processus_RHModel.Dim_Employes" Width="1.5" PointX="12.375" PointY="0.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Processus_RHModel.Dim_Manager" Width="1.5" PointX="10" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Processus_RHModel.Dim_Sex" Width="1.5" PointX="0.875" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Processus_RHModel.Dim_Status" Width="1.5" PointX="9.125" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Processus_RHModel.Dim_StatusMarital" Width="1.5" PointX="4.25" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Processus_RHModel.TF_Absenteisme" Width="1.5" PointX="7.25" PointY="1" IsExpanded="true" />
+        <AssociationConnector Association="Processus_RHModel.FK_TF_Absenteisme_Dim_Absences" ManuallyRouted="false" />
+        <AssociationConnector Association="Processus_RHModel.FK_TF_Absenteisme_Dim_DepEmp" ManuallyRouted="false" />
+        <AssociationConnector Association="Processus_RHModel.FK_TF_Absenteisme_Dim_Employes" ManuallyRouted="false" />
+        <AssociationConnector Association="Processus_RHModel.FK_TF_Absenteisme_Dim_Manager" ManuallyRouted="false" />
+        <AssociationConnector Association="Processus_RHModel.FK_TF_Absenteisme_Dim_Sex" ManuallyRouted="false" />
+        <AssociationConnector Association="Processus_RHModel.FK_TF_Absenteisme_Dim_Status" ManuallyRouted="false" />
+        <AssociationConnector Association="Processus_RHModel.FK_TF_Absenteisme_Dim_StatusMarital" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

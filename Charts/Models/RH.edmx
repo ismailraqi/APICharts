@@ -1,0 +1,584 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Processus_RHModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Dim_Absences">
+          <Key>
+            <PropertyRef Name="id_absence" />
+          </Key>
+          <Property Name="id_absence" Type="int" Nullable="false" />
+          <Property Name="Date" Type="datetime" />
+          <Property Name="id_user" Type="int" />
+          <Property Name="Copie de jrs_absence" Type="decimal" Precision="28" Scale="0" />
+          <Property Name="Taux" Type="decimal" Precision="28" Scale="3" />
+          <Property Name="Taux_Assiduite" Type="decimal" Precision="28" Scale="3" />
+        </EntityType>
+        <EntityType Name="Dim_DepEmp">
+          <Key>
+            <PropertyRef Name="id_dept" />
+          </Key>
+          <Property Name="id_dept" Type="int" Nullable="false" />
+          <Property Name="Department" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Dim_Employes">
+          <Key>
+            <PropertyRef Name="Cle_CoreDataSet" />
+          </Key>
+          <Property Name="Cle_CoreDataSet" Type="int" Nullable="false" />
+          <Property Name="Employee Number" Type="bigint" />
+          <Property Name="State" Type="nvarchar" MaxLength="255" />
+          <Property Name="Zip" Type="bigint" />
+          <Property Name="Age" Type="int" />
+          <Property Name="Sex" Type="nvarchar" MaxLength="255" />
+          <Property Name="MaritalDesc" Type="nvarchar" MaxLength="255" />
+          <Property Name="CitizenDesc" Type="nvarchar" MaxLength="255" />
+          <Property Name="Hispanic/Latino" Type="nvarchar" MaxLength="255" />
+          <Property Name="Ancienneté" Type="int" />
+          <Property Name="RaceDesc" Type="nvarchar" MaxLength="255" />
+          <Property Name="Reason For Term" Type="nvarchar" MaxLength="255" />
+          <Property Name="Employment Status" Type="nvarchar" MaxLength="255" />
+          <Property Name="Department" Type="nvarchar" MaxLength="255" />
+          <Property Name="Position" Type="nvarchar" MaxLength="255" />
+          <Property Name="Pay Rate" Type="money" />
+          <Property Name="Manager Name" Type="nvarchar" MaxLength="255" />
+          <Property Name="Employee Source" Type="nvarchar" MaxLength="255" />
+          <Property Name="Performance Score" Type="nvarchar" MaxLength="255" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="511" />
+          <Property Name="CP DOB" Type="datetime" />
+          <Property Name="CP Date of Hire" Type="datetime" />
+          <Property Name="CP Date of Termination" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Dim_Manager">
+          <Key>
+            <PropertyRef Name="id_manager" />
+          </Key>
+          <Property Name="id_manager" Type="int" Nullable="false" />
+          <Property Name="Manager Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Dim_Sex">
+          <Key>
+            <PropertyRef Name="id_sex" />
+          </Key>
+          <Property Name="id_sex" Type="int" Nullable="false" />
+          <Property Name="Sex" Type="nvarchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Dim_Status">
+          <Key>
+            <PropertyRef Name="id_statut" />
+          </Key>
+          <Property Name="id_statut" Type="int" Nullable="false" />
+          <Property Name="Employment Status" Type="nvarchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Dim_StatusMarital">
+          <Key>
+            <PropertyRef Name="id_marital" />
+          </Key>
+          <Property Name="id_marital" Type="int" Nullable="false" />
+          <Property Name="MaritalDesc" Type="nvarchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TF_Absenteisme">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Cle_CoreDataSet" Type="int" />
+          <Property Name="Date" Type="datetime" />
+          <Property Name="Copie de jrs_absence" Type="numeric" Precision="28" Scale="0" />
+          <Property Name="Taux" Type="numeric" Precision="28" Scale="3" />
+          <Property Name="Taux_Assiduite" Type="numeric" Precision="28" Scale="3" />
+          <Property Name="Id_Perf_Score" Type="int" />
+          <Property Name="id_manager" Type="int" />
+          <Property Name="id_statut" Type="int" />
+          <Property Name="id_sex" Type="int" />
+          <Property Name="id_marital" Type="int" />
+          <Property Name="id_absence" Type="int" />
+          <Property Name="id_dept" Type="int" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_TF_Absenteisme_Dim_Absences">
+          <End Role="Dim_Absences" Type="Self.Dim_Absences" Multiplicity="0..1" />
+          <End Role="TF_Absenteisme" Type="Self.TF_Absenteisme" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dim_Absences">
+              <PropertyRef Name="id_absence" />
+            </Principal>
+            <Dependent Role="TF_Absenteisme">
+              <PropertyRef Name="id_absence" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TF_Absenteisme_Dim_DepEmp">
+          <End Role="Dim_DepEmp" Type="Self.Dim_DepEmp" Multiplicity="0..1" />
+          <End Role="TF_Absenteisme" Type="Self.TF_Absenteisme" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dim_DepEmp">
+              <PropertyRef Name="id_dept" />
+            </Principal>
+            <Dependent Role="TF_Absenteisme">
+              <PropertyRef Name="id_dept" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TF_Absenteisme_Dim_Employes">
+          <End Role="Dim_Employes" Type="Self.Dim_Employes" Multiplicity="0..1" />
+          <End Role="TF_Absenteisme" Type="Self.TF_Absenteisme" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dim_Employes">
+              <PropertyRef Name="Cle_CoreDataSet" />
+            </Principal>
+            <Dependent Role="TF_Absenteisme">
+              <PropertyRef Name="Cle_CoreDataSet" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TF_Absenteisme_Dim_Manager">
+          <End Role="Dim_Manager" Type="Self.Dim_Manager" Multiplicity="0..1" />
+          <End Role="TF_Absenteisme" Type="Self.TF_Absenteisme" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dim_Manager">
+              <PropertyRef Name="id_manager" />
+            </Principal>
+            <Dependent Role="TF_Absenteisme">
+              <PropertyRef Name="id_manager" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TF_Absenteisme_Dim_Sex">
+          <End Role="Dim_Sex" Type="Self.Dim_Sex" Multiplicity="0..1" />
+          <End Role="TF_Absenteisme" Type="Self.TF_Absenteisme" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dim_Sex">
+              <PropertyRef Name="id_sex" />
+            </Principal>
+            <Dependent Role="TF_Absenteisme">
+              <PropertyRef Name="id_sex" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TF_Absenteisme_Dim_Status">
+          <End Role="Dim_Status" Type="Self.Dim_Status" Multiplicity="0..1" />
+          <End Role="TF_Absenteisme" Type="Self.TF_Absenteisme" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dim_Status">
+              <PropertyRef Name="id_statut" />
+            </Principal>
+            <Dependent Role="TF_Absenteisme">
+              <PropertyRef Name="id_statut" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TF_Absenteisme_Dim_StatusMarital">
+          <End Role="Dim_StatusMarital" Type="Self.Dim_StatusMarital" Multiplicity="0..1" />
+          <End Role="TF_Absenteisme" Type="Self.TF_Absenteisme" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dim_StatusMarital">
+              <PropertyRef Name="id_marital" />
+            </Principal>
+            <Dependent Role="TF_Absenteisme">
+              <PropertyRef Name="id_marital" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Processus_RHModelStoreContainer">
+          <EntitySet Name="Dim_Absences" EntityType="Self.Dim_Absences" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Dim_DepEmp" EntityType="Self.Dim_DepEmp" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Dim_Employes" EntityType="Self.Dim_Employes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Dim_Manager" EntityType="Self.Dim_Manager" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Dim_Sex" EntityType="Self.Dim_Sex" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Dim_Status" EntityType="Self.Dim_Status" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Dim_StatusMarital" EntityType="Self.Dim_StatusMarital" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TF_Absenteisme" EntityType="Self.TF_Absenteisme" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_TF_Absenteisme_Dim_Absences" Association="Self.FK_TF_Absenteisme_Dim_Absences">
+            <End Role="Dim_Absences" EntitySet="Dim_Absences" />
+            <End Role="TF_Absenteisme" EntitySet="TF_Absenteisme" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TF_Absenteisme_Dim_DepEmp" Association="Self.FK_TF_Absenteisme_Dim_DepEmp">
+            <End Role="Dim_DepEmp" EntitySet="Dim_DepEmp" />
+            <End Role="TF_Absenteisme" EntitySet="TF_Absenteisme" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TF_Absenteisme_Dim_Employes" Association="Self.FK_TF_Absenteisme_Dim_Employes">
+            <End Role="Dim_Employes" EntitySet="Dim_Employes" />
+            <End Role="TF_Absenteisme" EntitySet="TF_Absenteisme" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TF_Absenteisme_Dim_Manager" Association="Self.FK_TF_Absenteisme_Dim_Manager">
+            <End Role="Dim_Manager" EntitySet="Dim_Manager" />
+            <End Role="TF_Absenteisme" EntitySet="TF_Absenteisme" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TF_Absenteisme_Dim_Sex" Association="Self.FK_TF_Absenteisme_Dim_Sex">
+            <End Role="Dim_Sex" EntitySet="Dim_Sex" />
+            <End Role="TF_Absenteisme" EntitySet="TF_Absenteisme" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TF_Absenteisme_Dim_Status" Association="Self.FK_TF_Absenteisme_Dim_Status">
+            <End Role="Dim_Status" EntitySet="Dim_Status" />
+            <End Role="TF_Absenteisme" EntitySet="TF_Absenteisme" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TF_Absenteisme_Dim_StatusMarital" Association="Self.FK_TF_Absenteisme_Dim_StatusMarital">
+            <End Role="Dim_StatusMarital" EntitySet="Dim_StatusMarital" />
+            <End Role="TF_Absenteisme" EntitySet="TF_Absenteisme" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Processus_RHModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Dim_Absences">
+          <Key>
+            <PropertyRef Name="id_absence" />
+          </Key>
+          <Property Name="id_absence" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <Property Name="id_user" Type="Int32" />
+          <Property Name="Copie_de_jrs_absence" Type="Decimal" Precision="28" Scale="0" />
+          <Property Name="Taux" Type="Decimal" Precision="28" Scale="3" />
+          <Property Name="Taux_Assiduite" Type="Decimal" Precision="28" Scale="3" />
+          <NavigationProperty Name="TF_Absenteisme" Relationship="Self.FK_TF_Absenteisme_Dim_Absences" FromRole="Dim_Absences" ToRole="TF_Absenteisme" />
+        </EntityType>
+        <EntityType Name="Dim_DepEmp">
+          <Key>
+            <PropertyRef Name="id_dept" />
+          </Key>
+          <Property Name="id_dept" Type="Int32" Nullable="false" />
+          <Property Name="Department" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TF_Absenteisme" Relationship="Self.FK_TF_Absenteisme_Dim_DepEmp" FromRole="Dim_DepEmp" ToRole="TF_Absenteisme" />
+        </EntityType>
+        <EntityType Name="Dim_Employes">
+          <Key>
+            <PropertyRef Name="Cle_CoreDataSet" />
+          </Key>
+          <Property Name="Cle_CoreDataSet" Type="Int32" Nullable="false" />
+          <Property Name="Employee_Number" Type="Int64" />
+          <Property Name="State" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Zip" Type="Int64" />
+          <Property Name="Age" Type="Int32" />
+          <Property Name="Sex" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="MaritalDesc" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="CitizenDesc" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Hispanic_Latino" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Ancienneté" Type="Int32" />
+          <Property Name="RaceDesc" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Reason_For_Term" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Employment_Status" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Department" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Position" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Pay_Rate" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Manager_Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Employee_Source" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Performance_Score" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="FullName" Type="String" MaxLength="511" FixedLength="false" Unicode="true" />
+          <Property Name="CP_DOB" Type="DateTime" Precision="3" />
+          <Property Name="CP_Date_of_Hire" Type="DateTime" Precision="3" />
+          <Property Name="CP_Date_of_Termination" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="TF_Absenteisme" Relationship="Self.FK_TF_Absenteisme_Dim_Employes" FromRole="Dim_Employes" ToRole="TF_Absenteisme" />
+        </EntityType>
+        <EntityType Name="Dim_Manager">
+          <Key>
+            <PropertyRef Name="id_manager" />
+          </Key>
+          <Property Name="id_manager" Type="Int32" Nullable="false" />
+          <Property Name="Manager_Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="TF_Absenteisme" Relationship="Self.FK_TF_Absenteisme_Dim_Manager" FromRole="Dim_Manager" ToRole="TF_Absenteisme" />
+        </EntityType>
+        <EntityType Name="Dim_Sex">
+          <Key>
+            <PropertyRef Name="id_sex" />
+          </Key>
+          <Property Name="id_sex" Type="Int32" Nullable="false" />
+          <Property Name="Sex" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="TF_Absenteisme" Relationship="Self.FK_TF_Absenteisme_Dim_Sex" FromRole="Dim_Sex" ToRole="TF_Absenteisme" />
+        </EntityType>
+        <EntityType Name="Dim_Status">
+          <Key>
+            <PropertyRef Name="id_statut" />
+          </Key>
+          <Property Name="id_statut" Type="Int32" Nullable="false" />
+          <Property Name="Employment_Status" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="TF_Absenteisme" Relationship="Self.FK_TF_Absenteisme_Dim_Status" FromRole="Dim_Status" ToRole="TF_Absenteisme" />
+        </EntityType>
+        <EntityType Name="Dim_StatusMarital">
+          <Key>
+            <PropertyRef Name="id_marital" />
+          </Key>
+          <Property Name="id_marital" Type="Int32" Nullable="false" />
+          <Property Name="MaritalDesc" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="TF_Absenteisme" Relationship="Self.FK_TF_Absenteisme_Dim_StatusMarital" FromRole="Dim_StatusMarital" ToRole="TF_Absenteisme" />
+        </EntityType>
+        <EntityType Name="TF_Absenteisme">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns="http://schemas.microsoft.com/ado/2009/11/edm" />
+          <Property Name="Cle_CoreDataSet" Type="Int32" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <Property Name="Copie_de_jrs_absence" Type="Decimal" Precision="28" Scale="0" />
+          <Property Name="Taux" Type="Decimal" Precision="28" Scale="3" />
+          <Property Name="Taux_Assiduite" Type="Decimal" Precision="28" Scale="3" />
+          <Property Name="Id_Perf_Score" Type="Int32" />
+          <Property Name="id_manager" Type="Int32" />
+          <Property Name="id_statut" Type="Int32" />
+          <Property Name="id_sex" Type="Int32" />
+          <Property Name="id_marital" Type="Int32" />
+          <Property Name="id_absence" Type="Int32" />
+          <Property Name="id_dept" Type="Int32" />
+          <NavigationProperty Name="Dim_Absences" Relationship="Self.FK_TF_Absenteisme_Dim_Absences" FromRole="TF_Absenteisme" ToRole="Dim_Absences" />
+          <NavigationProperty Name="Dim_DepEmp" Relationship="Self.FK_TF_Absenteisme_Dim_DepEmp" FromRole="TF_Absenteisme" ToRole="Dim_DepEmp" />
+          <NavigationProperty Name="Dim_Employes" Relationship="Self.FK_TF_Absenteisme_Dim_Employes" FromRole="TF_Absenteisme" ToRole="Dim_Employes" />
+          <NavigationProperty Name="Dim_Manager" Relationship="Self.FK_TF_Absenteisme_Dim_Manager" FromRole="TF_Absenteisme" ToRole="Dim_Manager" />
+          <NavigationProperty Name="Dim_Sex" Relationship="Self.FK_TF_Absenteisme_Dim_Sex" FromRole="TF_Absenteisme" ToRole="Dim_Sex" />
+          <NavigationProperty Name="Dim_Status" Relationship="Self.FK_TF_Absenteisme_Dim_Status" FromRole="TF_Absenteisme" ToRole="Dim_Status" />
+          <NavigationProperty Name="Dim_StatusMarital" Relationship="Self.FK_TF_Absenteisme_Dim_StatusMarital" FromRole="TF_Absenteisme" ToRole="Dim_StatusMarital" />
+        </EntityType>
+        <Association Name="FK_TF_Absenteisme_Dim_Absences">
+          <End Role="Dim_Absences" Type="Self.Dim_Absences" Multiplicity="0..1" />
+          <End Role="TF_Absenteisme" Type="Self.TF_Absenteisme" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dim_Absences">
+              <PropertyRef Name="id_absence" />
+            </Principal>
+            <Dependent Role="TF_Absenteisme">
+              <PropertyRef Name="id_absence" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TF_Absenteisme_Dim_DepEmp">
+          <End Role="Dim_DepEmp" Type="Self.Dim_DepEmp" Multiplicity="0..1" />
+          <End Role="TF_Absenteisme" Type="Self.TF_Absenteisme" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dim_DepEmp">
+              <PropertyRef Name="id_dept" />
+            </Principal>
+            <Dependent Role="TF_Absenteisme">
+              <PropertyRef Name="id_dept" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TF_Absenteisme_Dim_Employes">
+          <End Role="Dim_Employes" Type="Self.Dim_Employes" Multiplicity="0..1" />
+          <End Role="TF_Absenteisme" Type="Self.TF_Absenteisme" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dim_Employes">
+              <PropertyRef Name="Cle_CoreDataSet" />
+            </Principal>
+            <Dependent Role="TF_Absenteisme">
+              <PropertyRef Name="Cle_CoreDataSet" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TF_Absenteisme_Dim_Manager">
+          <End Role="Dim_Manager" Type="Self.Dim_Manager" Multiplicity="0..1" />
+          <End Role="TF_Absenteisme" Type="Self.TF_Absenteisme" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dim_Manager">
+              <PropertyRef Name="id_manager" />
+            </Principal>
+            <Dependent Role="TF_Absenteisme">
+              <PropertyRef Name="id_manager" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TF_Absenteisme_Dim_Sex">
+          <End Role="Dim_Sex" Type="Self.Dim_Sex" Multiplicity="0..1" />
+          <End Role="TF_Absenteisme" Type="Self.TF_Absenteisme" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dim_Sex">
+              <PropertyRef Name="id_sex" />
+            </Principal>
+            <Dependent Role="TF_Absenteisme">
+              <PropertyRef Name="id_sex" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TF_Absenteisme_Dim_Status">
+          <End Role="Dim_Status" Type="Self.Dim_Status" Multiplicity="0..1" />
+          <End Role="TF_Absenteisme" Type="Self.TF_Absenteisme" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dim_Status">
+              <PropertyRef Name="id_statut" />
+            </Principal>
+            <Dependent Role="TF_Absenteisme">
+              <PropertyRef Name="id_statut" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TF_Absenteisme_Dim_StatusMarital">
+          <End Role="Dim_StatusMarital" Type="Self.Dim_StatusMarital" Multiplicity="0..1" />
+          <End Role="TF_Absenteisme" Type="Self.TF_Absenteisme" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dim_StatusMarital">
+              <PropertyRef Name="id_marital" />
+            </Principal>
+            <Dependent Role="TF_Absenteisme">
+              <PropertyRef Name="id_marital" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RHEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Dim_Absences" EntityType="Self.Dim_Absences" />
+          <EntitySet Name="Dim_DepEmp" EntityType="Self.Dim_DepEmp" />
+          <EntitySet Name="Dim_Employes" EntityType="Self.Dim_Employes" />
+          <EntitySet Name="Dim_Manager" EntityType="Self.Dim_Manager" />
+          <EntitySet Name="Dim_Sex" EntityType="Self.Dim_Sex" />
+          <EntitySet Name="Dim_Status" EntityType="Self.Dim_Status" />
+          <EntitySet Name="Dim_StatusMarital" EntityType="Self.Dim_StatusMarital" />
+          <EntitySet Name="TF_Absenteisme" EntityType="Self.TF_Absenteisme" />
+          <AssociationSet Name="FK_TF_Absenteisme_Dim_Absences" Association="Self.FK_TF_Absenteisme_Dim_Absences">
+            <End Role="Dim_Absences" EntitySet="Dim_Absences" />
+            <End Role="TF_Absenteisme" EntitySet="TF_Absenteisme" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TF_Absenteisme_Dim_DepEmp" Association="Self.FK_TF_Absenteisme_Dim_DepEmp">
+            <End Role="Dim_DepEmp" EntitySet="Dim_DepEmp" />
+            <End Role="TF_Absenteisme" EntitySet="TF_Absenteisme" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TF_Absenteisme_Dim_Employes" Association="Self.FK_TF_Absenteisme_Dim_Employes">
+            <End Role="Dim_Employes" EntitySet="Dim_Employes" />
+            <End Role="TF_Absenteisme" EntitySet="TF_Absenteisme" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TF_Absenteisme_Dim_Manager" Association="Self.FK_TF_Absenteisme_Dim_Manager">
+            <End Role="Dim_Manager" EntitySet="Dim_Manager" />
+            <End Role="TF_Absenteisme" EntitySet="TF_Absenteisme" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TF_Absenteisme_Dim_Sex" Association="Self.FK_TF_Absenteisme_Dim_Sex">
+            <End Role="Dim_Sex" EntitySet="Dim_Sex" />
+            <End Role="TF_Absenteisme" EntitySet="TF_Absenteisme" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TF_Absenteisme_Dim_Status" Association="Self.FK_TF_Absenteisme_Dim_Status">
+            <End Role="Dim_Status" EntitySet="Dim_Status" />
+            <End Role="TF_Absenteisme" EntitySet="TF_Absenteisme" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TF_Absenteisme_Dim_StatusMarital" Association="Self.FK_TF_Absenteisme_Dim_StatusMarital">
+            <End Role="Dim_StatusMarital" EntitySet="Dim_StatusMarital" />
+            <End Role="TF_Absenteisme" EntitySet="TF_Absenteisme" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Processus_RHModelStoreContainer" CdmEntityContainer="RHEntities">
+          <EntitySetMapping Name="Dim_Absences">
+            <EntityTypeMapping TypeName="Processus_RHModel.Dim_Absences">
+              <MappingFragment StoreEntitySet="Dim_Absences">
+                <ScalarProperty Name="id_absence" ColumnName="id_absence" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="id_user" ColumnName="id_user" />
+                <ScalarProperty Name="Copie_de_jrs_absence" ColumnName="Copie de jrs_absence" />
+                <ScalarProperty Name="Taux" ColumnName="Taux" />
+                <ScalarProperty Name="Taux_Assiduite" ColumnName="Taux_Assiduite" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Dim_DepEmp">
+            <EntityTypeMapping TypeName="Processus_RHModel.Dim_DepEmp">
+              <MappingFragment StoreEntitySet="Dim_DepEmp">
+                <ScalarProperty Name="id_dept" ColumnName="id_dept" />
+                <ScalarProperty Name="Department" ColumnName="Department" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Dim_Employes">
+            <EntityTypeMapping TypeName="Processus_RHModel.Dim_Employes">
+              <MappingFragment StoreEntitySet="Dim_Employes">
+                <ScalarProperty Name="Cle_CoreDataSet" ColumnName="Cle_CoreDataSet" />
+                <ScalarProperty Name="Employee_Number" ColumnName="Employee Number" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Zip" ColumnName="Zip" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
+                <ScalarProperty Name="MaritalDesc" ColumnName="MaritalDesc" />
+                <ScalarProperty Name="CitizenDesc" ColumnName="CitizenDesc" />
+                <ScalarProperty Name="Hispanic_Latino" ColumnName="Hispanic/Latino" />
+                <ScalarProperty Name="Ancienneté" ColumnName="Ancienneté" />
+                <ScalarProperty Name="RaceDesc" ColumnName="RaceDesc" />
+                <ScalarProperty Name="Reason_For_Term" ColumnName="Reason For Term" />
+                <ScalarProperty Name="Employment_Status" ColumnName="Employment Status" />
+                <ScalarProperty Name="Department" ColumnName="Department" />
+                <ScalarProperty Name="Position" ColumnName="Position" />
+                <ScalarProperty Name="Pay_Rate" ColumnName="Pay Rate" />
+                <ScalarProperty Name="Manager_Name" ColumnName="Manager Name" />
+                <ScalarProperty Name="Employee_Source" ColumnName="Employee Source" />
+                <ScalarProperty Name="Performance_Score" ColumnName="Performance Score" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="CP_DOB" ColumnName="CP DOB" />
+                <ScalarProperty Name="CP_Date_of_Hire" ColumnName="CP Date of Hire" />
+                <ScalarProperty Name="CP_Date_of_Termination" ColumnName="CP Date of Termination" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Dim_Manager">
+            <EntityTypeMapping TypeName="Processus_RHModel.Dim_Manager">
+              <MappingFragment StoreEntitySet="Dim_Manager">
+                <ScalarProperty Name="id_manager" ColumnName="id_manager" />
+                <ScalarProperty Name="Manager_Name" ColumnName="Manager Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Dim_Sex">
+            <EntityTypeMapping TypeName="Processus_RHModel.Dim_Sex">
+              <MappingFragment StoreEntitySet="Dim_Sex">
+                <ScalarProperty Name="id_sex" ColumnName="id_sex" />
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Dim_Status">
+            <EntityTypeMapping TypeName="Processus_RHModel.Dim_Status">
+              <MappingFragment StoreEntitySet="Dim_Status">
+                <ScalarProperty Name="id_statut" ColumnName="id_statut" />
+                <ScalarProperty Name="Employment_Status" ColumnName="Employment Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Dim_StatusMarital">
+            <EntityTypeMapping TypeName="Processus_RHModel.Dim_StatusMarital">
+              <MappingFragment StoreEntitySet="Dim_StatusMarital">
+                <ScalarProperty Name="id_marital" ColumnName="id_marital" />
+                <ScalarProperty Name="MaritalDesc" ColumnName="MaritalDesc" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TF_Absenteisme">
+            <EntityTypeMapping TypeName="Processus_RHModel.TF_Absenteisme">
+              <MappingFragment StoreEntitySet="TF_Absenteisme">
+                <ScalarProperty Name="Cle_CoreDataSet" ColumnName="Cle_CoreDataSet" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Copie_de_jrs_absence" ColumnName="Copie de jrs_absence" />
+                <ScalarProperty Name="Taux" ColumnName="Taux" />
+                <ScalarProperty Name="Taux_Assiduite" ColumnName="Taux_Assiduite" />
+                <ScalarProperty Name="Id_Perf_Score" ColumnName="Id_Perf_Score" />
+                <ScalarProperty Name="id_manager" ColumnName="id_manager" />
+                <ScalarProperty Name="id_statut" ColumnName="id_statut" />
+                <ScalarProperty Name="id_sex" ColumnName="id_sex" />
+                <ScalarProperty Name="id_marital" ColumnName="id_marital" />
+                <ScalarProperty Name="id_absence" ColumnName="id_absence" />
+                <ScalarProperty Name="id_dept" ColumnName="id_dept" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
