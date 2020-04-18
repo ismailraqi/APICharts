@@ -28,7 +28,6 @@ namespace Charts.Controllers
             {
                 return NotFound();
             }
-
             var absenteismeList = new List<AbsenteismeModel>();
             var AbsJr = new List<decimal?>();
             foreach (var a in absByDepId)
@@ -48,16 +47,17 @@ namespace Charts.Controllers
                 absenteisme.id_absence = a.id_absence;
                 absenteisme.id_dept = a.id_dept;
                 AbsJr.Add(absenteisme.Copie_de_jrs_absence);
-
                 absenteismeList.Add(absenteisme);
-
             }
-            var SumJrs = DepName + " : " + AbsJr.Sum();
+            var SumJrs = AbsJr.Sum();
 
-
+            DepDaysModel depDays = new DepDaysModel
+            {
+                DepName = DepName,
+                Days = SumJrs
+            };
             //return Ok(absenteismeList);
-            return Ok(SumJrs);
-
+            return Ok(depDays);
         }
 
         // % Absence By Sex : Absence/sex/{id:int}
@@ -72,8 +72,13 @@ namespace Charts.Controllers
             {
                 return NotFound();
             }
-            var TauxAbs = Sex + " : " + (absBySexId * 100) / abs;
-            return Ok(TauxAbs);
+            float TauxAbs =(absBySexId * 100) / abs;
+            SexAbs sexAbs = new SexAbs
+            {
+                Taux = TauxAbs,
+                Sex = Sex
+            };
+            return Ok(sexAbs);
         }
 
         // % Absence By Statut Marital : Absence/Marital/1
@@ -88,8 +93,13 @@ namespace Charts.Controllers
             {
                 return NotFound();
             }
-            var TauxAbs = StatutMarital + " : " + (absByMaritalId * 100) / abs;
-            return Ok(TauxAbs);
+            float TauxAbs = (absByMaritalId * 100) / abs;
+            AbsMarital absMarital = new AbsMarital
+            {
+                Status = StatutMarital,
+                Taux = TauxAbs
+            };
+            return Ok(absMarital);
         }
 
         // Get Days of Absence By Manager : Absence/Manager/1
@@ -108,8 +118,13 @@ namespace Charts.Controllers
             {
                 AbsJrByM.Add(m.Copie_de_jrs_absence);
             }
-            var SumJ = MangerName + " : " + AbsJrByM.Sum();
-            return Ok(SumJ);
+            var SumJ = AbsJrByM.Sum();
+            AbsByManager absByManager = new AbsByManager
+            {
+                Manager = MangerName,
+                Days = SumJ
+            };
+            return Ok(absByManager);
         }
 
         // % assiduite par Dep
@@ -149,71 +164,71 @@ namespace Charts.Controllers
 
 
 
-        // PUT: api/Absenteisme/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutTF_Absenteisme(int id, TF_Absenteisme tF_Absenteisme)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        //// PUT: api/Absenteisme/5
+        //[ResponseType(typeof(void))]
+        //public IHttpActionResult PutTF_Absenteisme(int id, TF_Absenteisme tF_Absenteisme)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
 
-            if (id != tF_Absenteisme.Id)
-            {
-                return BadRequest();
-            }
+        //    if (id != tF_Absenteisme.Id)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            db.Entry(tF_Absenteisme).State = EntityState.Modified;
+        //    db.Entry(tF_Absenteisme).State = EntityState.Modified;
 
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!TF_AbsenteismeExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //    try
+        //    {
+        //        db.SaveChanges();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!TF_AbsenteismeExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-            return StatusCode(HttpStatusCode.NoContent);
-        }
+        //    return StatusCode(HttpStatusCode.NoContent);
+        //}
 
-        // POST: api/Absenteisme
-        [ResponseType(typeof(TF_Absenteisme))]
-        public IHttpActionResult PostTF_Absenteisme(TF_Absenteisme tF_Absenteisme)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        //// POST: api/Absenteisme
+        //[ResponseType(typeof(TF_Absenteisme))]
+        //public IHttpActionResult PostTF_Absenteisme(TF_Absenteisme tF_Absenteisme)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
 
-            db.TF_Absenteisme.Add(tF_Absenteisme);
-            db.SaveChanges();
+        //    db.TF_Absenteisme.Add(tF_Absenteisme);
+        //    db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = tF_Absenteisme.Id }, tF_Absenteisme);
-        }
+        //    return CreatedAtRoute("DefaultApi", new { id = tF_Absenteisme.Id }, tF_Absenteisme);
+        //}
 
-        // DELETE: api/Absenteisme/5
-        [ResponseType(typeof(TF_Absenteisme))]
-        public IHttpActionResult DeleteTF_Absenteisme(int id)
-        {
-            TF_Absenteisme tF_Absenteisme = db.TF_Absenteisme.Find(id);
-            if (tF_Absenteisme == null)
-            {
-                return NotFound();
-            }
+        //// DELETE: api/Absenteisme/5
+        //[ResponseType(typeof(TF_Absenteisme))]
+        //public IHttpActionResult DeleteTF_Absenteisme(int id)
+        //{
+        //    TF_Absenteisme tF_Absenteisme = db.TF_Absenteisme.Find(id);
+        //    if (tF_Absenteisme == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            db.TF_Absenteisme.Remove(tF_Absenteisme);
-            db.SaveChanges();
+        //    db.TF_Absenteisme.Remove(tF_Absenteisme);
+        //    db.SaveChanges();
 
-            return Ok(tF_Absenteisme);
-        }
+        //    return Ok(tF_Absenteisme);
+        //}
 
         protected override void Dispose(bool disposing)
         {

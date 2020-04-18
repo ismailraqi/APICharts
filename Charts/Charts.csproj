@@ -167,7 +167,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AbsByManager.cs" />
     <Compile Include="Models\AbsenteismeModel.cs" />
+    <Compile Include="Models\AbsMarital.cs" />
+    <Compile Include="Models\DepDaysModel.cs" />
     <Compile Include="Models\Dim_Absences.cs">
       <DependentUpon>RH.tt</DependentUpon>
     </Compile>
@@ -204,6 +207,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RH.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\SexAbs.cs" />
     <Compile Include="Models\TF_Absenteisme.cs">
       <DependentUpon>RH.tt</DependentUpon>
     </Compile>
